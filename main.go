@@ -1,8 +1,19 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"os"
+
+	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
+)
 
 func main() {
+	godotenv.Load()
+	port := os.Getenv("PORT") 
+	if "" == port {
+		port = "8080"
+	}
+
 	r := gin.Default()
 
 	r.GET("/", func(c *gin.Context) {
@@ -23,5 +34,5 @@ func main() {
 		}
 	}
 
-	r.Run(":4000")
+	r.Run(":" + port)
 }
