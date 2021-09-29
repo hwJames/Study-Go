@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/hwjames/Study-Go/routers/api"
 	"github.com/joho/godotenv"
 )
 
@@ -22,17 +23,7 @@ func main() {
 		})
 	})
 
-	api := r.Group("/api")
-	{
-		v1 := api.Group("/v1")
-		{
-			v1.GET("/ping", func(c *gin.Context) {
-				c.JSON(200, gin.H{
-					"message": "pong",
-				})
-			})
-		}
-	}
+	api.InitAPIRoutes(r)
 
 	r.Run(":" + port)
 }
