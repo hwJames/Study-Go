@@ -4,26 +4,25 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"github.com/hwjames/Study-Go/routers/api"
+	v1 "github.com/hwjames/Study-Go/routers/v1"
 	"github.com/joho/godotenv"
 )
 
-func main() {
+var r *gin.Engine
+
+func init() {
 	godotenv.Load()
+
+	r = gin.Default()
+	api := r.Group("/api")
+	v1.InitRoutes(api)
+}
+
+func main() {
 	port := os.Getenv("PORT") 
 	if "" == port {
 		port = "8080"
 	}
-
-	r := gin.Default()
-
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Hello World",
-		})
-	})
-
-	api.InitAPIRoutes(r)
 
 	r.Run(":" + port)
 }
